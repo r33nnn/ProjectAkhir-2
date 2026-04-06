@@ -14,107 +14,29 @@
 <section class="py-5">
 <div class="container">
     <div class="row g-4">
-        <!-- Sermon Item 1 -->
+        @forelse($khotbahs as $khotbah)
         <div class="col-md-6 col-lg-4">
             <div class="card-sermon bg-primary text-white">
                 <div class="sermon-image">
                     <div class="text-center">
                         <i class="sermon-icon bi bi-play-circle"></i>
-                        <p class="mt-2 mb-0">Video Khotbah</p>
+                        <p class="mt-2 mb-0">{{ $khotbah->penceramah ?? 'Khotbah' }}</p>
                     </div>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Iman dalam Cobaan</h5>
-                    <p class="card-text text-muted"></p>
-                    <small class="text-secondary">2 Januari 2025</small>
+                    <h5 class="card-title">{{ $khotbah->judul }}</h5>
+                    <p class="card-text text-muted">{{ Str::limit($khotbah->catatan ?? '', 100) }}</p>
+                    <small class="text-secondary">{{ $khotbah->tanggal_khotbah ?? date('d M Y') }}</small>
                 </div>
             </div>
         </div>
-
-        <!-- Sermon Item 2 -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card-sermon bg-primary text-white">
-                <div class="sermon-image">
-                    <div class="text-center">
-                        <i class="sermon-icon bi bi-play-circle"></i>
-                        <p class="mt-2 mb-0">Video Khotbah</p>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Kasih Kristus yang Sempurna</h5>
-                    <p class="card-text text-muted"></p>
-                    <small class="text-secondary">26 Desember 2024</small>
-                </div>
+        @empty
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                Belum ada khotbah tersedia
             </div>
         </div>
-
-        <!-- Sermon Item 3 -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card-sermon bg-primary text-white">
-                <div class="sermon-image">
-                    <div class="text-center">
-                        <i class="sermon-icon bi bi-play-circle"></i>
-                        <p class="mt-2 mb-0">Video Khotbah</p>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Hidup yang Berbuah</h5>
-                    <p class="card-text text-muted"></p>
-                    <small class="text-secondary">19 Desember 2024</small>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sermon Item 4 -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card-sermon bg-primary text-white">
-                <div class="sermon-image">
-                    <div class="text-center">
-                        <i class="sermon-icon bi bi-play-circle"></i>
-                        <p class="mt-2 mb-0">Video Khotbah</p>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Ketaatan kepada Firman</h5>
-                    <p class="card-text text-muted"></p>
-                    <small class="text-secondary">12 Desember 2024</small>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sermon Item 5 -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card-sermon bg-primary text-white">
-                <div class="sermon-image">
-                    <div class="text-center">
-                        <i class="sermon-icon bi bi-play-circle"></i>
-                        <p class="mt-2 mb-0">Video Khotbah</p>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Kuasa Doa</h5>
-                    <p class="card-text text-muted"></p>
-                    <small class="text-secondary">5 Desember 2024</small>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sermon Item 6 -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card-sermon bg-primary text-white">
-                <div class="sermon-image">
-                    <div class="text-center">
-                        <i class="sermon-icon bi bi-play-circle"></i>
-                        <p class="mt-2 mb-0">Video Khotbah</p>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Pertumbuhan Rohani</h5>
-                    <p class="card-text text-muted"></p>
-                    <small class="text-secondary">28 November 2024</small>
-                </div>
-            </div>
-        </div>
+        @endforelse
     </div>
 </div>
 </section>

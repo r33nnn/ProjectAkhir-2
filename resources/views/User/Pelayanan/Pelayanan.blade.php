@@ -1,130 +1,3 @@
-<?php
-    $gereja = "GBI Tambunan";
-
-    // ==========================================
-    // DATA KEPEMIMPINAN
-    // ==========================================
-    $kepemimpinan = [
-        [
-            "nama" => "Pdm. Roberto Sibarani, M.Th",
-            "jabatan" => "Gembala",
-            "foto" => "/gambar/pastor-roberto-portrait.png"
-        ],
-        [
-            "nama" => "Risma Purba",
-            "jabatan" => "Ibu Gembala",
-            "foto" => "/gambar/ibu-gembala-full-body.jpeg"
-        ]
-    ];
-
-    // ==========================================
-    // DATA TIM PELAYANAN
-    // ==========================================
-    $timPelayanan = [
-        [
-            "nama" => "Tim Musik",
-            "icon" => "fa-music",
-            "warna" => "primary",
-            "deskripsi" => "Melayani dalam pujian dan penyembahan",
-            "anggota" => [
-                ["Kevin Siahaan", "Drum"],
-                ["Ruth Sibarani", "Singer"],
-                ["Michelle", "Pianist"],
-                ["Yezkie", "Pianist"]
-            ]
-        ],
-        [
-            "nama" => "Tim Multimedia",
-            "icon" => "fa-desktop",
-            "warna" => "success",
-            "deskripsi" => "Mengelola teknologi dan media ibadah",
-            "anggota" => [
-                ["Jeremia Siraga", "Multimedia"],
-                ["Claudia Silaen", "Multimedia"]
-            ]
-        ],
-        [
-            "nama" => "Tim Tamborin",
-            "icon" => "fa-music",
-            "warna" => "warning",
-            "deskripsi" => "Melayani dalam tarian pujian",
-            "anggota" => [
-                ["Indah Siraga", "Tamborin"],
-                ["Risa Nadeak", "Tamborin"]
-            ]
-        ],
-        [
-            "nama" => "Tim Worship Leader",
-            "icon" => "fa-microphone",
-            "warna" => "info",
-            "deskripsi" => "Memimpin pujian dan penyembahan",
-            "anggota" => [
-                ["Icha Sdari Siburian", "WL"],
-                ["Dedi", "WL"],
-                ["Ibu Hasian", "WL"]
-            ]
-        ],
-        [
-            "nama" => "Tim Singer",
-            "icon" => "fa-headphones",
-            "warna" => "danger",
-            "deskripsi" => "Melayani sebagai penyanyi ibadah",
-            "anggota" => [
-                ["Ibu Celo", "Singer"],
-                ["Ibu Umado", "Singer"],
-                ["Irami", "Singer"],
-                ["Ibu Rose", "Singer"],
-                ["Ruth", "Singer"]
-            ]
-        ],
-        [
-            "nama" => "Sekolah Minggu",
-            "icon" => "fa-child",
-            "warna" => "secondary",
-            "deskripsi" => "Pelayanan anak dalam pengajaran firman Tuhan",
-            "anggota" => [
-                ["Ibu Eniel", "Guru Sekolah Minggu"]
-            ]
-        ]
-    ];
-
-    // ==========================================
-    // DATA FOTO PELAYANAN
-    // ==========================================
-    $fotoPelayanan = [
-        [
-            "judul" => "Baptisan di Danau Toba",
-            "deskripsi" => "Momen istimewa saat pelayanan baptisan di danau",
-            "foto" => "/gambar/baptisan.jpg"
-        ],
-        [
-            "judul" => "Ibadat Minggu",
-            "deskripsi" => "Kebersamaan dalam ibadah setiap hari Minggu",
-            "foto" => "/gambar/ibadah-minggu.jpg"
-        ],
-        [
-            "judul" => "Rapat Doa - Pemahaman Firman",
-            "deskripsi" => "Pembelajaran mendalam tentang Firman Tuhan",
-            "foto" => "/gambar/rapat-doa.jpg"
-        ],
-        [
-            "judul" => "Pelayanan Sosial Bersama",
-            "deskripsi" => "Berbagi kasih kepada sesama melalui pelayanan sosial",
-            "foto" => "/gambar/pelayanan-sosial.jpg"
-        ],
-        [
-            "judul" => "Acara Anak Tambunan",
-            "deskripsi" => "Kegembiraan anak-anak dalam program khusus",
-            "foto" => "/gambar/acara-anak.jpg"
-        ],
-        [
-            "judul" => "Pengurus Jemaat",
-            "deskripsi" => "Tim pemimpin yang melayani dengan sepenuh hati",
-            "foto" => "/gambar/pengurus-jemaat.jpg"
-        ]
-    ];
-?>
-
 @extends('layouts.app')
 
 @section('content')
@@ -168,37 +41,25 @@
             <p class="text-muted mb-5">Berbagai tim yang melayani dengan dedikasi dan kasih</p>
 
             <div class="row">
-                <?php foreach($timPelayanan as $tim): ?>
+                @forelse($pelayanans as $pelayanan)
                     <div class="col-md-4 mb-4">
                         <div class="card card-custom p-4 h-100">
-                            <!-- ICON -->
-                            <div class="icon-circle bg-<?= $tim['warna']; ?> mb-3">
-                                <i class="fa <?= $tim['icon']; ?>"></i>
+                            <div class="icon-circle bg-primary mb-3">
+                                <i class="fa fa-hands-helping"></i>
                             </div>
-
-                            <!-- TITLE -->
-                            <h5 class="fw-bold mb-2"><?= $tim['nama']; ?></h5>
-
-                            <!-- DESKRIPSI -->
+                            <h5 class="fw-bold mb-2">{{ $pelayanan->nama }}</h5>
                             <p class="small fw-semibold mb-3" style="color: #c97d39;">
-                                <?= $tim['deskripsi']; ?>
+                                {{ $pelayanan->deskripsi }}
                             </p>
-
-                            <hr>
-
-                            <!-- ANGGOTA TIM HEADER -->
-                            <p class="small fw-semibold mb-2">Anggota Tim:</p>
-
-                            <!-- ANGGOTA LIST -->
-                            <?php foreach($tim['anggota'] as $a): ?>
-                                <div class="d-flex justify-content-between small mb-1">
-                                    <span><?= $a[0]; ?></span>
-                                    <span class="text-<?= $tim['warna']; ?> fw-semibold"><?= $a[1]; ?></span>
-                                </div>
-                            <?php endforeach; ?>
                         </div>
                     </div>
-                <?php endforeach; ?>
+                @empty
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            Belum ada data pelayanan tersedia
+                        </div>
+                    </div>
+                @endforelse
             </div>
 
             <!-- JOIN BUTTON -->

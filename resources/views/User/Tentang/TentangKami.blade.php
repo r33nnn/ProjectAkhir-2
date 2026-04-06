@@ -1,14 +1,3 @@
-<?php
-// Data bisa diganti dari database nanti
-$gereja = [
-    "nama" => "GBI Tambunan",
-    "tagline" => "Mengenal lebih dekat sejarah, visi, misi, dan keluarga besar GBI Tambunan",
-    "tahun_berdiri" => "1970",
-    "gembala" => "Pdm. Roberto Sibarani, M.Th",
-    "jabatan" => "Gembala Sidang"
-];
-?>
-
 @extends('layouts.app')
 
 @section('content')
@@ -16,8 +5,8 @@ $gereja = [
 <!-- HERO -->
 <section class="hero">
     <div class="container">
-        <h1 class="fw-bold"><?= $gereja['nama']; ?></h1>
-        <p class="lead"><?= $gereja['tagline']; ?></p>
+        <h1 class="fw-bold">{{ $tentang->header_title ?? 'GBI Tambunan' }}</h1>
+        <p class="lead">{{ $tentang->header_description ?? 'Mengenal lebih dekat sejarah, visi, misi, dan keluarga besar kami' }}</p>
     </div>
 </section>
 
@@ -28,10 +17,7 @@ $gereja = [
 
         <div class="card card-custom p-4 col-md-8 mx-auto" data-aos="fade-up">
             <p>
-                GBI Tambunan adalah bagian dari sinode Gereja Bethel Indonesia.
-                Sejak berdiri pada tahun <?= $gereja['tahun_berdiri']; ?>,
-                kami berkomitmen untuk melayani Tuhan dan membangun komunitas
-                yang bertumbuh dalam iman, pengharapan, dan kasih.
+                {!! $tentang->sejarah ?? 'GBI Tambunan adalah bagian dari sinode Gereja Bethel Indonesia. Kami berkomitmen untuk melayani Tuhan dan membangun komunitas yang bertumbuh dalam iman, pengharapan, dan kasih.' !!}
             </p>
         </div>
 
@@ -41,7 +27,7 @@ $gereja = [
                     <div class="icon-box-lg bg-soft-blue mb-3">
                         <i class="fa-solid fa-calendar"></i>
                     </div>
-                    <h5><?= $gereja['tahun_berdiri']; ?></h5>
+                    <h5>{{ $tentang->tahun_berdiri ?? $gereja['tahun_berdiri'] ?? '1970' }}</h5>
                     <p>Berdirinya Gereja Bethel Indonesia</p>
                 </div>
             </div>
@@ -68,12 +54,11 @@ $gereja = [
             <div class="col-md-6 mb-4" data-aos="zoom-in">
                 <div class="card card-custom p-5">
                     <div class="icon-box bg-soft-blue mb-3">
-                        <i class="fa-solid fa-heart"></i>
+                    <i class="fa-solid fa-eye"></i>
                     </div>
-                    <h5>Kasih kepada Tuhan</h5>
+                    <h5>Visi</h5>
                     <p>
-                        “Kasihilah Tuhan, Allahmu, dengan segenap hatimu,
-                        jiwamu dan akal budimu.”
+                        {!! $tentang->visi ?? 'Membangun gereja yang kuat dalam iman dan pengharapan' !!}
                     </p>
                 </div>
             </div>
@@ -83,9 +68,9 @@ $gereja = [
                     <div class="icon-box bg-soft-orange mb-3">
                         <i class="fa-solid fa-handshake"></i>
                     </div>
-                    <h5>Kasih kepada Sesama</h5>
+                    <h5>Misi</h5>
                     <p>
-                        “Kasihilah sesamamu manusia seperti dirimu sendiri.”
+                        {!! $tentang->misi ?? 'Melayani Tuhan dengan sepenuh hati dan mengasihi sesama' !!}
                     </p>
                 </div>
             </div>
@@ -99,12 +84,15 @@ $gereja = [
         <h2 class="fw-bold mb-5">Kepemimpinan</h2>
 
         <div class="card card-custom p-5 col-md-8 mx-auto" data-aos="fade-up">
-            <img src="https://via.placeholder.com/150" class="leadership-img mb-3" alt="Gembala">
-            <h5><?= $gereja['gembala']; ?></h5>
-            <small class="text-muted"><?= $gereja['jabatan']; ?></small>
+            @if($tentang && $tentang->gembala_foto)
+                <img src="{{ asset('storage/' . $tentang->gembala_foto) }}" class="leadership-img mb-3" alt="Gembala" style="max-width: 150px; border-radius: 10px;">
+            @else
+                <img src="https://via.placeholder.com/150" class="leadership-img mb-3" alt="Gembala">
+            @endif
+            <h5>{{ $tentang->gembala_nama ?? 'Gembala Sidang' }}</h5>
+            <small class="text-muted">{{ $tentang->gembala_jabatan ?? 'Pemimpin Rohani' }}</small>
             <p class="mt-3">
-                Sebagai gembala, kami berkomitmen untuk memimpin jemaat dalam kasih Kristus,
-                membangun iman yang kokoh dan melayani dengan hati yang tulus.
+                {!! $tentang->gembala_deskripsi ?? 'Sebagai gembala, kami berkomitmen untuk memimpin jemaat dalam kasih Kristus.' !!}
             </p>
         </div>
     </div>

@@ -9,6 +9,12 @@ use App\Http\Controllers\PelayananController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\KhotbahController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\User\TentangUserController;
+use App\Http\Controllers\User\JadwalUserController;
+use App\Http\Controllers\User\GaleriUserController;
+use App\Http\Controllers\User\KhotbahUserController;
+use App\Http\Controllers\User\PelayananUserController;
+use App\Http\Controllers\User\KontakUserController;
 
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -83,32 +89,20 @@ Route::get('/Profil.edit/{id}', [ProfilController::class, 'edit'])->name('profil
 Route::put('/Profil.update/{id}', [ProfilController::class, 'update'])->name('profil.update');
 });
 
-Route::get('/Tentang', function () {
-        return view('User.Tentang.TentangKami');
-    })->name('user.tentang');
+Route::get('/Tentang', [TentangUserController::class, 'index'])->name('user.tentang');
 
-    Route::get('/Jadwal', function () {
-        return view('Jadwal.Jadwal');
-    })->name('user.jadwal');
+Route::get('/Jadwal', [JadwalUserController::class, 'index'])->name('user.jadwal');
 
-    Route::get('/Galeri', function () {
-        return view('Galeri.Galeri');
-    })->name('user.galeri');
+Route::get('/Galeri', [GaleriUserController::class, 'index'])->name('user.galeri');
 
-    Route::get('/Khotbah', function () {
-        return view('Khotbah.Khotbah');
-    })->name('user.khotbah');
+Route::get('/Khotbah', [KhotbahUserController::class, 'index'])->name('user.khotbah');
 
-    Route::get('/Pelayanan', function () {
-        return view('Pelayanan.Pelayanan');
-    })->name('user.pelayanan');
+Route::get('/Pelayanan', [PelayananUserController::class, 'index'])->name('user.pelayanan');
 
-    Route::get('/Kontak', function () {
-        return view('Kontak.kontak');
-    })->name('user.kontak');
+Route::get('/Kontak', [KontakUserController::class, 'index'])->name('user.kontak');
 
     Route::get('/Jemaat', function () {
-        return view('Jemaat.DaftarJemaat');
+        return view('User.Jemaat.DaftarJemaat');
     })->name('user.jemaat');
 
     Route::get('/Gereja', function () {

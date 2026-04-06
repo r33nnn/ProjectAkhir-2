@@ -203,6 +203,10 @@
             </div>
         </form>
 
+        <a href="{{ route('home') }}" class="btn btn-outline-info w-100 mt-3">
+            <i class="bi bi-globe"></i> Lihat Website
+        </a>
+
         <div class="verse-box text-center">
             <i class="bi bi-book-half"></i>
             <strong> Yeremia 29:11</strong><br>

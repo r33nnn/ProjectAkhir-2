@@ -8,8 +8,8 @@ class TentangController extends Controller
 {
     public function index()
     {
-        $Tentang = Tentang::all();
-        return view('admin.tentang.index', compact('data'));
+        $tentang = Tentang::first();
+        return view('admin.tentang.index', compact('tentang'));
     }
 
     public function create()
@@ -25,6 +25,7 @@ class TentangController extends Controller
             'sejarah' => 'required',
             'visi' => 'required',
             'misi' => 'required',
+            'tahun_berdiri' => 'nullable|digits:4',
             'gembala_nama' => 'required',
             'gembala_jabatan' => 'nullable',
             'gembala_deskripsi' => 'nullable',
@@ -55,6 +56,7 @@ class TentangController extends Controller
             'sejarah' => 'required',
             'visi' => 'required',
             'misi' => 'required',
+            'tahun_berdiri' => 'nullable|digits:4',
             'gembala_nama' => 'required',
             'gembala_jabatan' => 'nullable',
             'gembala_deskripsi' => 'nullable',

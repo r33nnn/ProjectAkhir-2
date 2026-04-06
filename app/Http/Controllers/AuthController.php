@@ -23,7 +23,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('home'));
+            return redirect()->intended(route('welcome'));
         }
 
         return back()->withErrors(['email' => 'Email atau password salah.'])->onlyInput('email');
@@ -47,7 +47,7 @@ class AuthController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->intended(route('home'));
+        return redirect()->intended(route('welcome'));
     }
 
     public function logout(Request $request)

@@ -99,6 +99,13 @@
     <div class="container">
         <h1 class="fw-bold">Galeri</h1>
         <p class="mb-0">Dokumentasi Kegiatan Terbaru</p>
+        @auth
+            <div class="mt-3">
+                <a href="{{ route('galeris.index') }}" class="btn btn-primary">
+                    <i class="bi bi-gear-fill"></i> Kelola Galeri (Admin)
+                </a>
+            </div>
+        @endauth
     </div>
 </section>
 
@@ -123,67 +130,26 @@
 
         <!-- GRID -->
         <div class="row g-4">
-
-            <!-- ITEM 1 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="gallery-item">
-                    <span class="gallery-date">2024-12-31</span>
-                    <div class="gallery-thumb">
-                        <img src="{{ asset('gambar/1.webp') }}" loading="lazy">
+            @forelse($galeris as $galeri)
+                <div class="col-md-6 col-lg-4">
+                    <div class="gallery-item">
+                        <span class="gallery-date">{{ $galeri->event_date ?? date('Y-m-d') }}</span>
+                        <div class="gallery-thumb">
+                            @if($galeri->image)
+                                <img src="/ProjectAkhir-1/public/storage/{{ $galeri->image }}" alt="{{ $galeri->title }}" loading="lazy">
+                            @else
+                                <img src="https://via.placeholder.com/300x400" alt="No Image" loading="lazy">
+                            @endif
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- ITEM 2 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="gallery-item">
-                    <span class="gallery-date">2026-02-14</span>
-                    <div class="gallery-thumb">
-                        <img src="{{ asset('gambar/2.webp') }}" loading="lazy">
+            @empty
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        Belum ada galeri tersedia
                     </div>
                 </div>
-            </div>
-
-            <!-- ITEM 3 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="gallery-item">
-                    <span class="gallery-date">2026-02-13</span>
-                    <div class="gallery-thumb">
-                        <img src="{{ asset('gambar/3.webp') }}" loading="lazy">
-                    </div>
-                </div>
-            </div>
-
-            <!-- ITEM 4 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="gallery-item">
-                    <span class="gallery-date">2026-02-12</span>
-                    <div class="gallery-thumb">
-                        <img src="{{ asset('gambar/4.webp') }}" loading="lazy">
-                    </div>
-                </div>
-            </div>
-
-            <!-- ITEM 5 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="gallery-item">
-                    <span class="gallery-date">2026-02-10</span>
-                    <div class="gallery-thumb">
-                        <img src="{{ asset('gambar/5.webp') }}" loading="lazy">
-                    </div>
-                </div>
-            </div>
-
-            <!-- ITEM 6 -->
-            <div class="col-md-6 col-lg-4">
-                <div class="gallery-item">
-                    <span class="gallery-date">2026-02-08</span>
-                    <div class="gallery-thumb">
-                        <img src="{{ asset('gambar/6.webp') }}" loading="lazy">
-                    </div>
-                </div>
-            </div>
-
+            @endforelse
         </div>
 
     </div>

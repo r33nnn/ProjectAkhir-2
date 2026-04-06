@@ -69,6 +69,14 @@
                       required></textarea>
         </div>
 
+        <div class="form-group mb-3">
+            <label>Tahun Berdiri</label>
+            <input type="text"
+                   name="tahun_berdiri"
+                   class="form-control"
+                   placeholder="Masukkan tahun berdiri (misal 1970)">
+        </div>
+
         <hr>
 
         <h3>Kepemimpinan</h3>

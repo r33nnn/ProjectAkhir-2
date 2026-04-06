@@ -17,6 +17,7 @@ class Tentang extends Model
         'sejarah',
         'visi',
         'misi',
+        'tahun_berdiri',
         'gembala_nama',
         'gembala_jabatan',
         'gembala_deskripsi',

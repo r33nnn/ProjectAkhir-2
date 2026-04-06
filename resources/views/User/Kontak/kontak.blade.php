@@ -1,8 +1,3 @@
-<?php
-$gereja = "GBI Tambunan";
-$whatsapp = "6281384871163"; // tanpa tanda +
-?>
-
 @extends('layouts.app')
 
 @section('content')
@@ -41,57 +36,23 @@ $whatsapp = "6281384871163"; // tanpa tanda +
     <div class="col-md-6">
         <h4 class="fw-bold mb-4">Informasi Kontak</h4>
 
-        <div class="card card-custom p-3 mb-3">
-            <div class="d-flex align-items-start">
-                <div class="icon-box bg-blue me-3">
-                    <i class="fa fa-location-dot"></i>
-                </div>
-                <div>
-                    <strong>Alamat</strong><br>
-                    Jl. Pasar Tambunan Desa No.4<br>
-                    Lumban Pea, Kec. Balige<br>
-                    Toba, Sumatera Utara
-                </div>
-            </div>
-        </div>
-
-        <div class="card card-custom p-3 mb-3">
-            <div class="d-flex align-items-start">
-                <div class="icon-box bg-green me-3">
-                    <i class="fa fa-phone"></i>
-                </div>
-                <div>
-                    <strong>Telepon</strong><br>
-                    +62 813-8487-1163
+        @forelse($kontaks as $kontak)
+            <div class="card card-custom p-3 mb-3">
+                <div class="d-flex align-items-start">
+                    <div class="icon-box bg-blue me-3">
+                        <i class="fa {{ $kontak->icon ?? 'fa-info-circle' }}"></i>
+                    </div>
+                    <div>
+                        <strong>{{ $kontak->judul }}</strong><br>
+                        {!! $kontak->isi !!}
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="card card-custom p-3 mb-3">
-            <div class="d-flex align-items-start">
-                <div class="icon-box bg-orange me-3">
-                    <i class="fa fa-envelope"></i>
-                </div>
-                <div>
-                    <strong>Email</strong><br>
-                    gbitambunan01@gmail.com
-                </div>
+        @empty
+            <div class="alert alert-info">
+                Belum ada informasi kontak tersedia
             </div>
-        </div>
-
-        <div class="card card-custom p-3">
-            <div class="d-flex align-items-start">
-                <div class="icon-box bg-purple me-3">
-                    <i class="fa fa-clock"></i>
-                </div>
-                <div>
-                    <strong>Jam Sekretariat</strong><br>
-                    Senin - Jumat : 09.00 - 17.00 WIB<br>
-                    Sabtu : 09.00 - 15.00 WIB<br>
-                    Minggu : Setelah ibadah
-                </div>
-            </div>
-        </div>
+        @endforelse
 
     </div>
 
@@ -125,7 +86,7 @@ $whatsapp = "6281384871163"; // tanpa tanda +
 </section>
 
 <footer class="text-center py-3 bg-primary text-white">
-    &copy; <?= date("Y"); ?> <?= $gereja ?> - All Rights Reserved
+    &copy; {{ date("Y") }} GBI Tambunan - All Rights Reserved
 </footer>
 
 <script>
@@ -139,7 +100,7 @@ function kirimWA(){
         + "Email: " + email + "%0A"
         + "Pesan: " + pesan;
 
-    var url = "https://wa.me/<?= $whatsapp ?>?text=" + text;
+    var url = "https://wa.me/6281384871163?text=" + text;
     window.open(url, '_blank');
 }
 </script>

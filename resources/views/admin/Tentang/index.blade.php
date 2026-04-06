@@ -3,9 +3,12 @@
 // Untuk Laravel: rename ke index.blade.php
 ?>
 <!DOCTYPE html>
+@php
+    $tentang = \App\Models\Tentang::first() ?? new \App\Models\Tentang();
+@endphp
 <html lang="id">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8"/
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tentang Kami – Admin GBI Tambunan</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -406,7 +409,7 @@
     <a href="{{ route('kontaks.index') }}">Kontak</a>
   </nav>
   <div class="topbar-right">
-    <button class="btn-viewsite">🌐 Lihat Website</button>
+    <a href="{{ route('home') }}"><button class="btn-viewsite">🌐 Lihat Website</button></a>
     <div class="avatar" id="tbAva">A</div>
   </div>
 </header>
@@ -457,24 +460,24 @@
     <!-- HERO BANNER -->
     <div class="page-hero">
       <div class="hero-tag">ℹ Halaman Publik</div>
-      <h2>GBI Tambunan</h2>
-      <p>Mengenal lebih dekat sejarah, visi, misi, dan keluarga besar GBI Tambunan. Edit konten di bawah untuk memperbarui tampilan halaman publik.</p>
+      <h2>{{ $tentang->header_title ?? 'GBI Tambunan' }}</h2>
+      <p>{{ $tentang->header_description ?? 'Mengenal lebih dekat sejarah, visi, misi, dan keluarga besar GBI Tambunan. Edit konten di bawah untuk memperbarui tampilan halaman publik.' }}</p>
       <div class="hero-actions">
-        <button class="btn-hero-primary" onclick="openModal('sejarah')">✏ Edit Sejarah</button>
-        <button class="btn-hero-outline" onclick="window.open('#','_blank')">🌐 Lihat Halaman Publik</button>
+        <a class="btn-hero-primary" href="{{ $tentang->id ? route('tentang.edit', $tentang->id) : route('tentang.create') }}">✏ Edit Konten</a>
+        <a class="btn-hero-outline" target="_blank" href="{{ route('user.tentang') }}">🌐 Lihat Halaman Publik</a>
       </div>
     </div>
 
     <!-- ══ SEJARAH ══ -->
     <div class="section-head">
       <div class="section-title" style="flex:1;margin-bottom:0;">📖 Sejarah Kami</div>
-      <button class="edit-btn" style="margin-left:16px;" onclick="openModal('sejarah')">✏ Edit</button>
+      <a href="{{ $tentang->id ? route('tentang.edit', $tentang->id) : route('tentang.create') }}" class="edit-btn" style="margin-left:16px;">✏ Edit</a>
     </div>
 
     <div class="sejarah-card" style="margin-bottom:16px;">
       <div class="edit-bar">
         <div class="sejarah-text" id="sejarahText">
-          <p>GBI Tambunan adalah bagian dari sinode Gereja Bethel Indonesia. Sejak berdiri pada tahun 1970, kami berkomitmen untuk melayani Tuhan dan membangun komunitas yang bertumbuh dalam iman, pengharapan, dan kasih.</p>
+          <p>{{ $tentang->sejarah ?? 'GBI Tambunan adalah bagian dari sinode Gereja Bethel Indonesia. Sejak berdiri pada tahun 1970, kami berkomitmen untuk melayani Tuhan dan membangun komunitas yang bertumbuh dalam iman, pengharapan, dan kasih.' }}</p>
         </div>
       </div>
     </div>
@@ -483,7 +486,7 @@
       <div class="milestone-card">
         <div class="ms-icon c">⛪</div>
         <div>
-          <div class="ms-year">1970</div>
+          <div class="ms-year">{{ $tentang->tahun_berdiri ?? '1970' }}</div>
           <div class="ms-label">Berdirinya Gereja Bethel Indonesia</div>
         </div>
       </div>
@@ -499,38 +502,37 @@
     <!-- ══ VISI & MISI ══ -->
     <div class="section-head">
       <div class="section-title" style="flex:1;margin-bottom:0;">✨ Visi & Misi</div>
-      <button class="edit-btn" style="margin-left:16px;" onclick="openModal('visimisi')">✏ Edit</button>
+      <a href="{{ $tentang->id ? route('tentang.edit', $tentang->id) : route('tentang.create') }}" class="edit-btn" style="margin-left:16px;">✏ Edit</a>
     </div>
 
     <div class="vm-grid" style="margin-bottom:32px;">
       <div class="vm-card">
         <div class="vm-icon c">💙</div>
-        <div class="vm-title">Kasih kepada Tuhan</div>
-        <div class="vm-quote" id="visiText">"Kasihilah Tuhan, Allahmu, dengan segenap hatimu, jiwamu dan akal budamu."</div>
+        <div class="vm-title">Visi</div>
+        <div class="vm-quote" id="visiText">{{ $tentang->visi ?? 'Membangun gereja yang kuat dalam iman dan pengharapan' }}</div>
       </div>
       <div class="vm-card">
         <div class="vm-icon g">🤝</div>
-        <div class="vm-title">Kasih kepada Sesama</div>
-        <div class="vm-quote" id="misiText">"Kasihilah sesamamu manusia seperti dirimu sendiri."</div>
+        <div class="vm-title">Misi</div>
+        <div class="vm-quote" id="misiText">{{ $tentang->misi ?? 'Melayani Tuhan dengan sepenuh hati dan mengasihi sesama' }}</div>
       </div>
     </div>
 
     <!-- ══ KEPEMIMPINAN ══ -->
     <div class="section-head">
       <div class="section-title" style="flex:1;margin-bottom:0;">👤 Kepemimpinan</div>
-      <button class="add-btn" onclick="openModal('leader')">＋ Tambah Pemimpin</button>
+      <a href="{{ $tentang->id ? route('tentang.edit', $tentang->id) : route('tentang.create') }}" class="add-btn">＋ Tambah Pemimpin</a>
     </div>
 
     <div class="leader-grid" id="leaderGrid">
 
       <div class="leader-card">
-        <div class="leader-avatar">RS</div>
-        <div class="leader-name">Pdm. Roberto Sibarani, M.Th</div>
-        <div class="leader-role">Gembala Sidang</div>
-        <div class="leader-desc">Sebagai gembala, kami berkomitmen untuk memimpin jemaat dalam kasih Kristus, membangun iman yang kokoh dan melayani dengan hati yang tulus.</div>
+        <div class="leader-avatar">{{ strtoupper(substr($tentang->gembala_nama ?? 'G',0,1)) }}</div>
+        <div class="leader-name">{{ $tentang->gembala_nama ?? 'Gembala Sidang' }}</div>
+        <div class="leader-role">{{ $tentang->gembala_jabatan ?? 'Pemimpin Rohani' }}</div>
+        <div class="leader-desc">{{ $tentang->gembala_deskripsi ?? 'Sebagai gembala, kami berkomitmen untuk memimpin jemaat dalam kasih Kristus.' }}</div>
         <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;">
-          <button class="edit-btn" onclick="openModal('editLeader',0)">✏ Edit</button>
-          <button class="edit-btn" style="background:var(--danger-lt);color:var(--danger);border-color:rgba(224,85,85,.25);" onclick="removeLeader(0)">🗑 Hapus</button>
+          <a class="edit-btn" href="{{ $tentang->id ? route('tentang.edit', $tentang->id) : route('tentang.create') }}">✏ Edit</a>
         </div>
       </div>
 
@@ -540,8 +542,7 @@
         <div class="leader-role">Wakil Gembala</div>
         <div class="leader-desc">Membantu memimpin jemaat dalam pelayanan mingguan dan pembinaan rohani kelompok sel dan pemuda gereja.</div>
         <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;">
-          <button class="edit-btn" onclick="openModal('editLeader',1)">✏ Edit</button>
-          <button class="edit-btn" style="background:var(--danger-lt);color:var(--danger);border-color:rgba(224,85,85,.25);" onclick="removeLeader(1)">🗑 Hapus</button>
+          <a class="edit-btn" href="{{ $tentang->id ? route('tentang.edit', $tentang->id) : route('tentang.create') }}">✏ Edit</a>
         </div>
       </div>
 
@@ -550,257 +551,21 @@
   </div><!-- /content -->
 </div><!-- /wrapper -->
 
-<!-- ══ MODAL: EDIT SEJARAH ══ -->
-<div class="overlay" id="modalSejarah">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>✏ Edit <span>Sejarah</span></h3>
-      <button class="close-btn" onclick="closeModal('sejarah')">✕</button>
-    </div>
-    <div class="fg">
-      <label>Teks Sejarah Gereja</label>
-      <textarea id="inputSejarah" rows="5" placeholder="Tulis sejarah gereja..."></textarea>
-    </div>
-    <div class="modal-foot">
-      <button class="btn-cancel" onclick="closeModal('sejarah')">Batal</button>
-      <button class="btn-save" onclick="saveSejarah()">💾 Simpan</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ MODAL: EDIT VISI MISI ══ -->
-<div class="overlay" id="modalVisimisi">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>✏ Edit <span>Visi & Misi</span></h3>
-      <button class="close-btn" onclick="closeModal('visimisi')">✕</button>
-    </div>
-    <div class="fg">
-      <label>Visi – Kasih kepada Tuhan</label>
-      <textarea id="inputVisi" rows="3" placeholder="Tulis ayat atau pernyataan visi..."></textarea>
-    </div>
-    <div class="fg">
-      <label>Misi – Kasih kepada Sesama</label>
-      <textarea id="inputMisi" rows="3" placeholder="Tulis ayat atau pernyataan misi..."></textarea>
-    </div>
-    <div class="modal-foot">
-      <button class="btn-cancel" onclick="closeModal('visimisi')">Batal</button>
-      <button class="btn-save" onclick="saveVisiMisi()">💾 Simpan</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ MODAL: TAMBAH / EDIT PEMIMPIN ══ -->
-<div class="overlay" id="modalLeader">
-  <div class="modal">
-    <div class="modal-head">
-      <h3 id="leaderModalTitle">➕ Tambah <span>Pemimpin</span></h3>
-      <button class="close-btn" onclick="closeModal('leader')">✕</button>
-    </div>
-    <div class="form-row">
-      <div class="fg">
-        <label>Nama Lengkap *</label>
-        <input id="lNama" type="text" placeholder="cth. Pdt. Roberto Sibarani"/>
-      </div>
-      <div class="fg">
-        <label>Jabatan *</label>
-        <input id="lJabatan" type="text" placeholder="cth. Gembala Sidang"/>
-      </div>
-    </div>
-    <div class="fg">
-      <label>Deskripsi</label>
-      <textarea id="lDesc" rows="3" placeholder="Tuliskan deskripsi singkat..."></textarea>
-    </div>
-    <div class="fg">
-      <label>Inisial Avatar (maks. 2 huruf)</label>
-      <input id="lInisial" type="text" maxlength="2" placeholder="cth. RS" style="text-transform:uppercase;"/>
-    </div>
-
-    <!-- Upload foto pemimpin -->
-    <div class="photo-drop" id="pdLeader">
-      <div class="pd-ico">📷</div>
-      <p>Klik atau drag foto pemimpin · <span>JPG/PNG maks 2MB</span></p>
-      <input type="file" id="lFotoInput" accept="image/*" onchange="onLFoto(event)"/>
-      <img id="lFotoPreview" class="pd-prev"/>
-    </div>
-
-    <div class="modal-foot">
-      <button class="btn-cancel" onclick="closeModal('leader')">Batal</button>
-      <button class="btn-save" onclick="saveLeader()">💾 Simpan</button>
-    </div>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none">@csrf</form>
 
 <script>
-  // ── Storage keys ──
-  const K = { sejarah:'gbi_tentang_sejarah', visi:'gbi_tentang_visi', misi:'gbi_tentang_misi', leaders:'gbi_tentang_leaders', nextid:'gbi_tentang_nextid' };
-
-  const DEFAULT_LEADERS = [
-    { id:1, nama:'Pdm. Roberto Sibarani, M.Th', jabatan:'Gembala Sidang', desc:'Sebagai gembala, kami berkomitmen untuk memimpin jemaat dalam kasih Kristus, membangun iman yang kokoh dan melayani dengan hati yang tulus.', inisial:'RS' },
-    { id:2, nama:'Pdt. Samuel Manurung',         jabatan:'Wakil Gembala',   desc:'Membantu memimpin jemaat dalam pelayanan mingguan dan pembinaan rohani kelompok sel dan pemuda gereja.', inisial:'SM' },
-  ];
-
-  function load(k, def) { try { const v=localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch(e){ return def; } }
-  function save(k, v) { localStorage.setItem(k, typeof v==='string' ? v : JSON.stringify(v)); }
-
-  let sejarah = load(K.sejarah, 'GBI Tambunan adalah bagian dari sinode Gereja Bethel Indonesia. Sejak berdiri pada tahun 1970, kami berkomitmen untuk melayani Tuhan dan membangun komunitas yang bertumbuh dalam iman, pengharapan, dan kasih.');
-  let visi    = load(K.visi, '"Kasihilah Tuhan, Allahmu, dengan segenap hatimu, jiwamu dan akal budamu."');
-  let misi    = load(K.misi, '"Kasihilah sesamamu manusia seperti dirimu sendiri."');
-  let leaders = load(K.leaders, JSON.parse(JSON.stringify(DEFAULT_LEADERS)));
-  let nextId  = load(K.nextid, 3);
-  let editLeaderIdx = null;
-
-  // ── Apply on load ──
-  document.getElementById('sejarahText').innerHTML = '<p>' + esc(sejarah) + '</p>';
-  document.getElementById('visiText').textContent  = visi;
-  document.getElementById('misiText').textContent  = misi;
-  renderLeaders();
-
-  function esc(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
-
-  // ── Render Leaders ──
-  function renderLeaders() {
-    const grid = document.getElementById('leaderGrid');
-    if (leaders.length === 0) {
-      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);font-size:13px;background:var(--white);border:1px solid var(--border);border-radius:12px;">Belum ada data pemimpin. Klik <strong>Tambah Pemimpin</strong>.</div>`;
-      return;
-    }
-    grid.innerHTML = leaders.map((l, i) => {
-      const avaContent = l.foto
-        ? `<img src="${l.foto}" alt="${esc(l.nama)}"/>`
-        : esc(l.inisial || l.nama.slice(0,2).toUpperCase());
-      return `
-      <div class="leader-card" style="animation-delay:${i*0.07}s">
-        <div class="leader-avatar" onclick="quickFotoLeader(${i})" title="Klik untuk ganti foto">
-          ${avaContent}
-          <div class="ava-ol"><span>📷</span><p>Ganti Foto</p></div>
-        </div>
-        <div class="leader-name">${esc(l.nama)}</div>
-        <div class="leader-role">${esc(l.jabatan)}</div>
-        <div class="leader-desc">${esc(l.desc)}</div>
-        <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;">
-          <button class="edit-btn" onclick="openModal('editLeader',${i})">✏ Edit</button>
-          <button class="edit-btn" style="background:var(--danger-lt);color:var(--danger);border-color:rgba(224,85,85,.25);" onclick="removeLeader(${i})">🗑 Hapus</button>
-        </div>
-      </div>`}).join('');
-  }
-
-  // ── Modals ──
-  function openModal(type, idx) {
-    if (type === 'sejarah') {
-      document.getElementById('inputSejarah').value = sejarah;
-      document.getElementById('modalSejarah').classList.add('open');
-    } else if (type === 'visimisi') {
-      document.getElementById('inputVisi').value = visi;
-      document.getElementById('inputMisi').value = misi;
-      document.getElementById('modalVisimisi').classList.add('open');
-    } else if (type === 'leader') {
-      editLeaderIdx = null;
-      document.getElementById('leaderModalTitle').innerHTML = '➕ Tambah <span>Pemimpin</span>';
-      document.getElementById('lNama').value = '';
-      document.getElementById('lJabatan').value = '';
-      document.getElementById('lDesc').value = '';
-      document.getElementById('lInisial').value = '';
-      resetLDrop();
-      document.getElementById('modalLeader').classList.add('open');
-    } else if (type === 'editLeader') {
-      editLeaderIdx = idx;
-      const l = leaders[idx];
-      document.getElementById('leaderModalTitle').innerHTML = '✏ Edit <span>Pemimpin</span>';
-      document.getElementById('lNama').value    = l.nama;
-      document.getElementById('lJabatan').value = l.jabatan;
-      document.getElementById('lDesc').value    = l.desc;
-      document.getElementById('lInisial').value = l.inisial || '';
-      if(l.foto){ _lFoto=l.foto; showLPreview(l.foto); } else resetLDrop();
-      document.getElementById('modalLeader').classList.add('open');
-    }
-  }
-
-  function closeModal(type) {
-    const ids = { sejarah:'modalSejarah', visimisi:'modalVisimisi', leader:'modalLeader' };
-    document.getElementById(ids[type] || 'modalLeader').classList.remove('open');
-    if(type==='leader') resetLDrop();
-  }
-
-  // ── Save Sejarah ──
-  function saveSejarah() {
-    const val = document.getElementById('inputSejarah').value.trim();
-    if (!val) { toast('Teks sejarah tidak boleh kosong!','err'); return; }
-    sejarah = val;
-    save(K.sejarah, sejarah);
-    document.getElementById('sejarahText').innerHTML = '<p>' + esc(sejarah) + '</p>';
-    closeModal('sejarah');
-    toast('Sejarah berhasil diperbarui ✓','ok');
-  }
-
-  // ── Save Visi Misi ──
-  function saveVisiMisi() {
-    const v = document.getElementById('inputVisi').value.trim();
-    const m = document.getElementById('inputMisi').value.trim();
-    if (!v || !m) { toast('Visi dan Misi tidak boleh kosong!','err'); return; }
-    visi = v; misi = m;
-    save(K.visi, visi); save(K.misi, misi);
-    document.getElementById('visiText').textContent = visi;
-    document.getElementById('misiText').textContent = misi;
-    closeModal('visimisi');
-    toast('Visi & Misi berhasil diperbarui ✓','ok');
-  }
-
-  // ── Save Leader ──
-  function saveLeader() {
-    const nama    = document.getElementById('lNama').value.trim();
-    const jabatan = document.getElementById('lJabatan').value.trim();
-    const desc    = document.getElementById('lDesc').value.trim();
-    const inisial = document.getElementById('lInisial').value.trim().toUpperCase() || nama.slice(0,2).toUpperCase();
-    const foto    = _lFoto || '';
-    if (!nama || !jabatan) { toast('Nama dan jabatan wajib diisi!','err'); return; }
-    if (editLeaderIdx !== null) {
-      leaders[editLeaderIdx] = { ...leaders[editLeaderIdx], nama, jabatan, desc, inisial, foto };
-      toast('Data pemimpin berhasil diperbarui ✓','ok');
-    } else {
-      leaders.push({ id: nextId++, nama, jabatan, desc, inisial, foto });
-      save(K.nextid, nextId);
-      toast('Pemimpin baru berhasil ditambahkan ✓','ok');
-    }
-    save(K.leaders, leaders);
-    renderLeaders();
-    closeModal('leader');
-  }
-
-  // ── Remove Leader ──
-  function removeLeader(idx) {
-    if (!confirm('Hapus data pemimpin ini?')) return;
-    leaders.splice(idx, 1);
-    save(K.leaders, leaders);
-    renderLeaders();
-    toast('Data pemimpin dihapus','err');
-  }
-
-  // ── Toast ──
   function toast(msg, type='ok') {
     const t = document.getElementById('toast');
-    t.textContent = (type==='ok'?'✅ ':'🗑 ') + msg;
+    t.textContent = (type==='ok' ? '✅ ' : '🗑 ') + msg;
     t.className = 'toast ' + type;
     t.classList.add('show');
     setTimeout(()=>t.classList.remove('show'), 3000);
   }
-
-  // close on backdrop click
-  document.querySelectorAll('.overlay').forEach(el => {
-    el.addEventListener('click', function(e) { if (e.target===this) this.classList.remove('open'); });
-  });
-
-  /* ── FOTO PEMIMPIN ── */
-  let _lFoto = null;
-
-  function resetLDrop(){
-    _lFoto = null;
+</script>
+</body>
+</html>    _lFoto = null;
     document.getElementById('lFotoPreview').style.display='none';
     document.getElementById('lFotoPreview').src='';
     document.getElementById('lFotoInput').value='';

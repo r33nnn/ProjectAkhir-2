@@ -257,7 +257,7 @@
     <a href="{{ route('kontaks.index') }}">Kontak</a>
   </nav>
   <div class="topbar-right">
-    <button class="btn-viewsite">🌐 Lihat Website</button>
+    <a href="{{ route('home') }}"><button class="btn-viewsite">🌐 Lihat Website</button></a>
     <div class="avatar" id="tbAva">A</div>
   </div>
 </header>

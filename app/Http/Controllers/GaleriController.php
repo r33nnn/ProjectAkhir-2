@@ -23,14 +23,15 @@ class GaleriController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'nullable',
-            'image' => 'required|image',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'event_date' => 'nullable|date'
         ]);
 
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('Galeri', 'public');
+            $data['image'] = $request->file('image')->store('galeri', 'public');
+            \Log::info('Image uploaded: ' . $data['image']);
         }
 
         Galeri::create($data);
@@ -54,13 +55,17 @@ class GaleriController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'nullable',
-            'image' => 'nullable|image',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'event_date' => 'nullable|date'
         ]);
 
         $data = $request->all();
 
         if ($request->hasFile('image')) {
+            // Hapus file lama (opsional tapi direkomendasikan)
+            if ($Galeri->image && \Storage::disk('public')->exists($Galeri->image)) {
+                \Storage::disk('public')->delete($Galeri->image);
+            }
             $data['image'] = $request->file('image')->store('galeri', 'public');
         }
 
